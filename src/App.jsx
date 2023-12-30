@@ -1,51 +1,22 @@
 import { Fireworks } from '@fireworks-js/react'
 import './App.css'
-import { useEffect, useRef,useState } from 'react'
+import useCountdown from './hook/useCountdown'
 
 function App() {
-  const container = useRef(null)
-  const [lunchTheFireworks, setLunchTheFireworks] = useState(false)
-  const [days, setDays] = useState(0)
-  const [hours, setHours] = useState(0)
-  const [minutes, setMinutes] = useState(0)
-  const [seconds, setSeconds] = useState(0)
+  const {seconds,minutes,hours,days} = useCountdown()
 
-  const deadline = "January, 01, 2024";
+  const d = new Date()
+  let dayText = d.toLocaleDateString();
   
-  const getTime = () => {
-    const time = Date.parse(deadline) - Date.now();
-
-    setSeconds(Math.floor((time / 1000) % 60))
-    setMinutes(Math.floor((time / (1000 * 60) % 60)))
-    setHours(Math.floor((time / (1000 * 60 * 60 ) % 24)))
-    setDays(Math.floor((time / (1000 * 60 * 60 * 24))))
-  };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      getTime(deadline)
-    },1000)
-    // const timeout = setTimeout(() => {
-    //   setLunchTheFireworks(true)
-    // },time)
-
-    return () => {
-      clearInterval(interval)
-      // clearTimeout(timeout)
-    }
-  },[])
-  // const toggleSound = () => {
-  // }
   return (
     <div>
-      {/* <div>
-        <button onClick={toggleSound()}>sound</button>
-      </div> */}
-      {lunchTheFireworks ? (
-        <>
-          <h1 className='big-text'>HAPPY NEW YEAR</h1>
+      <div className='bg-black' />
+      {dayText == "01/01/2024" ? (
+        <div className='firework-container'>
+          <h1 className='big-text'>✨🎇HAPPY NEW YEAR🎇✨</h1>
+          <h1 className='big-text'>🎆2024🎆</h1>
+          <p className='desc'>wish you have the best year</p>
           <Fireworks
-            ref={container}
             options={
               { opacity: 0.5,
                 sound: {
@@ -77,10 +48,10 @@ function App() {
               background: '#000'
             }}
           />
-        </>
-      ):(
+        </div>
+      ) : (
       <div className='timer-container'>
-        <h1 className='countdown'>COUNTDOWN</h1>
+        <h1 className='countdown'>COUNTDOWN🎉</h1>
         <div className='timer'>
           <div className='box'>
             <p>days</p>
